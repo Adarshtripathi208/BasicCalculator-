@@ -1,0 +1,137 @@
+// Import the Scanner class to get user input.
+import java.util.Scanner;
+
+/**
+ * A simple console-based calculator program.
+ * It demonstrates the use of methods, loops, conditionals, and I/O.
+ */
+public class Calculator {
+
+    // --- Methods for basic arithmetic operations ---
+
+    /**
+     * Adds two numbers.
+     * @param a The first number.
+     * @param b The second number.
+     * @return The sum of the two numbers.
+     */
+    public static double add(double a, double b) {
+        return a + b;
+    }
+
+    /**
+     * Subtracts the second number from the first.
+     * @param a The first number.
+     * @param b The second number.
+     * @return The result of a - b.
+     */
+    public static double subtract(double a, double b) {
+        return a - b;
+    }
+
+    /**
+     * Multiplies two numbers.
+     * @param a The first number.
+     * @param b The second number.
+     * @return The product of the two numbers.
+     */
+    public static double multiply(double a, double b) {
+        return a * b;
+    }
+
+    /**
+     * Divides the first number by the second.
+     * @param a The dividend.
+     * @param b The divisor.
+     * @return The result of a / b.
+     * @throws IllegalArgumentException if the divisor is zero.
+     */
+    public static double divide(double a, double b) {
+        if (b == 0) {
+            throw new IllegalArgumentException("Error: Division by zero is not allowed.");
+        }
+        return a / b;
+    }
+
+    /**
+     * The main method where the program execution begins.
+     * This method handles user interaction and the main calculation loop.
+     */
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console.
+        Scanner scanner = new Scanner(System.in);
+        // Use a boolean flag to control the main loop.
+        boolean continueCalculations = true;
+
+        System.out.println("Welcome to the Java Console Calculator!");
+        System.out.println("---------------------------------------");
+
+        // Loop indefinitely until the user chooses to exit.
+        while (continueCalculations) {
+            try {
+                // Prompt the user for the first number.
+                System.out.print("Enter the first number: ");
+                // Read the first number as a double.
+                double num1 = scanner.nextDouble();
+
+                // Prompt the user for the operator.
+                System.out.print("Enter an operator (+, -, *, /): ");
+                // Read the operator as a string and get the first character.
+                char operator = scanner.next().charAt(0);
+
+                // Prompt the user for the second number.
+                System.out.print("Enter the second number: ");
+                // Read the second number as a double.
+                double num2 = scanner.nextDouble();
+
+                double result = 0;
+
+                // Use a switch statement to perform the correct operation.
+                switch (operator) {
+                    case '+':
+                        result = add(num1, num2);
+                        System.out.println("Result: " + num1 + " + " + num2 + " = " + result);
+                        break;
+                    case '-':
+                        result = subtract(num1, num2);
+                        System.out.println("Result: " + num1 + " - " + num2 + " = " + result);
+                        break;
+                    case '*':
+                        result = multiply(num1, num2);
+                        System.out.println("Result: " + num1 + " * " + num2 + " = " + result);
+                        break;
+                    case '/':
+                        result = divide(num1, num2);
+                        System.out.println("Result: " + num1 + " / " + num2 + " = " + result);
+                        break;
+                    default:
+                        // Handle invalid operator input.
+                        System.out.println("Invalid operator! Please try again.");
+                }
+
+            } catch (java.util.InputMismatchException e) {
+                // Handle cases where the user enters non-numeric input for numbers.
+                System.out.println("Invalid input! Please enter valid numbers.");
+                // Clear the scanner buffer to prevent an infinite loop.
+                scanner.next(); 
+            } catch (IllegalArgumentException e) {
+                // Handle the division by zero error from the divide method.
+                System.out.println(e.getMessage());
+            }
+
+            // Ask the user if they want to perform another calculation.
+            System.out.print("Do you want to perform another calculation? (yes/no): ");
+            // Read the user's response.
+            String response = scanner.next().toLowerCase();
+            // If the response is not "yes", set the flag to false to exit the loop.
+            if (!response.equals("yes")) {
+                continueCalculations = false;
+            }
+            System.out.println(); // Print a new line for better readability.
+        }
+
+        // Close the scanner object to prevent resource leaks.
+        scanner.close();
+        System.out.println("Thank you for using the calculator!");
+    }
+}
